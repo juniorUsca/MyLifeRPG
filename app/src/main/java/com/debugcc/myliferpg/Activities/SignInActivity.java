@@ -20,6 +20,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -113,9 +114,6 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                 break;
             case R.id.fake_facebook_button_login:
                 signInFacebook();
-                break;
-            case R.id.sign_out_button:
-                signOut();
                 break;
         }
     }
@@ -260,19 +258,6 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
             }
         };
     } /// END FACEBOOK
-
-
-    private void signOut() {
-        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-                new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(Status status) {
-                        Log.d(TAG, "onResult: SALIO CERRO SESION");
-                    }
-                });
-
-        FirebaseAuth.getInstance().signOut();
-    }
 
     /// FIREBASE
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
