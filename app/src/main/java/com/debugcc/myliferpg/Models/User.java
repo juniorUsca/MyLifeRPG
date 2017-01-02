@@ -1,14 +1,26 @@
 package com.debugcc.myliferpg.Models;
+
+import android.databinding.BindingAdapter;
+import android.graphics.Bitmap;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.util.Log;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.debugcc.myliferpg.R;
+
 public class User {
 
     public static final String FACEBOOK_PROVIDER = "Facebook";
     public static final String GOOGLE_PROVIDER = "Google";
 
-    String id;
-    String name;
-    String email;
-    String urlProfilePicture;
-    String provider;
+    private String id;
+    private String name;
+    private String email;
+    private String urlProfilePicture;
+    private String provider;
 
     public User() {
         id = "";
@@ -24,6 +36,7 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
+        //notifyPropertyChanged(com.debugcc.myliferpg.BR.id);
     }
 
     public String getName() {
@@ -48,6 +61,26 @@ public class User {
 
     public void setUrlProfilePicture(String urlProfilePicture) {
         this.urlProfilePicture = urlProfilePicture;
+    }
+
+    @BindingAdapter({"bind:imageUrl"})
+    public static void loadImage(ImageView view, String imageUrl) {
+        Log.e("modelo usuario", "loadImage: "+imageUrl );
+        Glide.with(view.getContext())
+                .load(imageUrl)
+                .asBitmap()
+                .placeholder(R.drawable.img_placeholder_dark)
+                .centerCrop()
+                .error(R.drawable.img_placeholder_dark)
+                .into(new BitmapImageViewTarget(view) {
+                    @Override
+                    protected void setResource(Bitmap resource) {
+                        RoundedBitmapDrawable circularBitmapDrawable =
+                                RoundedBitmapDrawableFactory.create(view.getContext().getResources(), resource);
+                        circularBitmapDrawable.setCircular(true);
+                        view.setImageDrawable(circularBitmapDrawable);
+                    }
+                });
     }
 
     public String getProvider() {

@@ -8,4 +8,9 @@
 
     <string name="facebook_app_id">1824627951159711</string>
     <string name="fb_login_protocol_scheme">fb1824627951159711</string>
+
+
+    <string name="activity_sign_in_login_with_facebook">Login with Facebook</string>
+    <string name="activity_sign_in_login_with_google">Login with Google</string>
+
 </resources>
